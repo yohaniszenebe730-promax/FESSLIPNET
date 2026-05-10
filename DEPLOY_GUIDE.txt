@@ -1,0 +1,184 @@
+# 🚀 FES ETHIOPIA AI — Fly.io Deploy Guide
+# Owner: @yzpromax | Channel: @Free_Ethio_server_FES
+
+==========================================================
+ STEP 1 — GET YOUR TELEGRAM BOT TOKEN
+==========================================================
+
+1. Open Telegram on your phone
+2. Search:  @BotFather
+3. Tap START
+4. Send this message:   /newbot
+5. BotFather asks for a name — type:
+      FES ETHIOPIA AI
+6. BotFather asks for a username — type:
+      FES_EthiopiaAI_Bot
+   (username must end in "bot" and be unique)
+7. BotFather sends you a message like:
+
+   "Done! Congratulations on your new bot.
+    Use this token to access the HTTP API:
+    7123456789:AAHdkxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+8. COPY that token — you will need it in Step 4.
+
+----------------------------------------------------------
+ WHERE TO FIND YOUR TELEGRAM USER ID
+----------------------------------------------------------
+1. Open Telegram
+2. Search: @userinfobot
+3. Tap START — it shows your numeric ID, e.g. 987654321
+4. Copy that number — you need it for OWNER_ID in Step 4.
+
+
+==========================================================
+ STEP 2 — INSTALL FLY CLI (on Android using Termux)
+==========================================================
+
+# Open Termux and run:
+pkg update && pkg install curl -y
+curl -L https://fly.io/install.sh | sh
+export PATH="$HOME/.fly/bin:$PATH"
+
+# Add this line to ~/.bashrc so it persists:
+echo 'export PATH="$HOME/.fly/bin:$PATH"' >> ~/.bashrc
+
+
+==========================================================
+ STEP 3 — CREATE FLY ACCOUNT & LOGIN
+==========================================================
+
+flyctl auth signup
+# or if you already have an account:
+flyctl auth login
+
+
+==========================================================
+ STEP 4 — UPLOAD YOUR BOT FILES
+==========================================================
+
+# Create a folder and put all 4 files inside:
+#   bot.py
+#   requirements.txt
+#   Dockerfile
+#   fly.toml
+
+mkdir fes_bot
+cd fes_bot
+# (copy the 4 files here)
+
+
+==========================================================
+ STEP 5 — LAUNCH APP ON FLY.IO
+==========================================================
+
+flyctl launch
+# When it asks: "Would you like to copy its configuration?" → YES
+# When it asks: "Would you like to deploy now?" → NO  (we set secrets first)
+
+
+==========================================================
+ STEP 6 — SET YOUR SECRET KEYS
+==========================================================
+
+# ── REQUIRED ──────────────────────────────────────────────
+
+# Your bot token from BotFather (Step 1):
+flyctl secrets set BOT_TOKEN=7123456789:AAHdkxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# Your own Telegram user ID (from @userinfobot):
+flyctl secrets set OWNER_ID=987654321
+
+# Your Fly.io app URL (replace with your real app name):
+flyctl secrets set APP_URL=https://fes-ethiopia-ai.fly.dev
+
+# ── OPTIONAL (add later for extra features) ───────────────
+
+# Web search (get free key at serper.dev):
+flyctl secrets set SERPER_KEY=your_serper_key_here
+
+# Background removal (get free key at remove.bg):
+flyctl secrets set REMOVEBG_KEY=your_removebg_key_here
+
+
+==========================================================
+ STEP 7 — DEPLOY
+==========================================================
+
+flyctl deploy
+
+# Wait ~2 minutes. When done you'll see:
+# ✔  Machine started successfully
+
+
+==========================================================
+ STEP 8 — REGISTER WEBHOOK WITH TELEGRAM
+==========================================================
+
+# Open this URL in your browser (replace TOKEN and APP_NAME):
+https://api.telegram.org/bot<YOUR_BOT_TOKEN>/setWebhook?url=https://fes-ethiopia-ai.fly.dev/webhook
+
+# You should see: {"ok":true,"result":true}
+# This tells Telegram where to send messages.
+
+
+==========================================================
+ STEP 9 — TEST YOUR BOT
+==========================================================
+
+1. Open Telegram
+2. Search your bot username, e.g. @FES_EthiopiaAI_Bot
+3. Send:  /start
+4. You should see the 5×5 menu appear! ✅
+
+
+==========================================================
+ USEFUL COMMANDS
+==========================================================
+
+# View live logs:
+flyctl logs
+
+# Check app status:
+flyctl status
+
+# Redeploy after editing bot.py:
+flyctl deploy
+
+# Check secrets:
+flyctl secrets list
+
+# Open app in browser:
+flyctl open
+
+
+==========================================================
+ FREE TIER LIMITS (Fly.io)
+==========================================================
+
+✅ 3 shared-CPU machines free
+✅ 256 MB RAM free
+✅ Always-on (no sleep like Replit/Render free tier)
+✅ HTTPS included
+✅ Custom domain supported
+
+==========================================================
+ TROUBLESHOOTING
+==========================================================
+
+Bot not responding?
+→ Check: flyctl logs
+→ Check webhook: https://api.telegram.org/bot<TOKEN>/getWebhookInfo
+
+Users can't join gate?
+→ Make sure bot is admin in @Free_Ethio_server_FES
+
+AI not working?
+→ Pollinations is free, no key needed. Check internet in logs.
+
+Web search not working?
+→ Add: flyctl secrets set SERPER_KEY=your_key
+
+==========================================================
+ OWNER: @yzpromax | CHANNEL: @Free_Ethio_server_FES
+==========================================================
