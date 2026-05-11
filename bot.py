@@ -24,7 +24,7 @@ from telegram.error import TelegramError
 
 # ─── Configuration ───────────────────────────────────────────────────────────
 
-BOT_TOKEN = os.environ.get("BOT_TOKEN", "8645966729:AAG7YUn76t4n7UhJhOpXh3tkBUPX1hMVh14")
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "8645966729:AAGTs8HfpLrLg5Asn4BsdEnE9FlumiSUISc")
 CHANNEL_USERNAME = "@Free_Ethio_server_FES"
 
 # SlipNet server definitions (hardcoded from the encrypted configs you provided)
