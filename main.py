@@ -10,7 +10,7 @@ from telegram.ext import (
 import os
 
 # ── Config ────────────────────────────────────────────────
-TELEGRAM_BOT_TOKEN = os.getenv(""8645966729:AAHYy9_QKAdtqZ25S7nZyC0GnHtztCUeDDs"")
+TELEGRAM_BOT_TOKEN = os.getenv(""8645966729:AAHYy9_QKAdtqZ25S7nZyC0GnHtztCUeDDs, "")
 
 # ── Logger (module-level, not inside main) ────────────────
 logging.basicConfig(
