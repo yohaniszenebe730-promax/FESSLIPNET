@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
 Auto SLIPNET VPN Generator - Telegram Bot
+Deployable on Railway.app
 Generates SLIPNET VPN profiles using DNSTT tunnels with UK and Germany servers.
 """
 
